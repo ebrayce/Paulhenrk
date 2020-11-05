@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="20f8d25b-f4e6-4912-b419-043a779affb6" name="Default Changelist" comment="" />
+    <list default="true" id="20f8d25b-f4e6-4912-b419-043a779affb6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Back.Sales.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Paulhenrk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Paulhenrk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SaleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SaleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Purchases.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Purchases.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Sales.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Sales.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/MainApp.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/MainApp.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/VuexStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/VuexStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -164,7 +190,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604504259910</updated>
-      <workItem from="1604504260997" duration="2187000" />
+      <workItem from="1604504260997" duration="9667000" />
+      <workItem from="1604528640254" duration="4627000" />
     </task>
     <servers />
   </component>
@@ -188,5 +215,17 @@
       <screen x="1366" y="0" width="1600" height="900" />
     </state>
     <state width="1557" height="235" key="GridCell.Tab.0.right/0.0.1366.768/1366.0.1600.900@1366.0.1600.900" timestamp="1604504482073" />
+    <state x="404" y="124" width="540" height="524" key="StructurePopup" timestamp="1604521780093">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="404" y="124" width="540" height="524" key="StructurePopup/0.0.1366.768@0.0.1366.768" timestamp="1604521780093" />
+    <state x="339" y="172" key="run.anything.popup" timestamp="1604532051201">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="339" y="172" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1604532051201" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604531680237">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1604531680237" />
   </component>
 </project>

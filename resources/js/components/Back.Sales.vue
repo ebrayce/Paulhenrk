@@ -1,7 +1,7 @@
 <template>
     <v-data-table
         :headers="headers"
-        :items="purchases"
+        :items="sales"
         sort-by="calories"
         class="elevation-1"
     >
@@ -10,7 +10,7 @@
             <v-toolbar
                 flat
             >
-                <v-toolbar-title>All Purchases</v-toolbar-title>
+                <v-toolbar-title>All Sales</v-toolbar-title>
                 <v-divider
                     class="mx-4"
                     inset
@@ -29,7 +29,7 @@
                             v-bind="attrs"
                             v-on="on"
                         >
-                            Record Purchases
+                            Record Sales
                         </v-btn>
                     </template>
                     <v-card>
@@ -47,6 +47,8 @@
                                         md="12"
                                     >
                                         <v-autocomplete
+                                            class="amber"
+                                            dark
                                             v-model="select"
                                             :items="products"
                                             :item-value="this"
@@ -59,19 +61,30 @@
                                     <v-col
                                         cols="12"
                                         sm="6"
-                                        md="6"
+                                        md="4"
                                     >
                                         <v-text-field
+                                            readonly
                                             type="number"
                                             v-model.number="editedItem.price"
                                             label="Price"
                                         ></v-text-field>
                                     </v-col>
-
                                     <v-col
                                         cols="12"
                                         sm="6"
-                                        md="6"
+                                        md="4"
+                                    >
+                                        <v-text-field
+                                            type="number"
+                                            v-model.number="editedItem.sold_at"
+                                            label="Sold At"
+                                        ></v-text-field>
+                                    </v-col>
+                                    <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
                                     >
                                         <v-text-field
                                             type="number"
@@ -109,10 +122,13 @@
                     max-width="500px"
                 >
                     <v-card>
-                        <v-list>
-                            <v-list-item><span class="headline">Date: {{activeItem.date}}</span></v-list-item>
-                            <v-list-item><span class="headline">{{activeItem.fromNow}}</span></v-list-item>
-                        </v-list>
+                        <v-card-title>
+                            <v-list>
+                                <v-list-item><span class="headline">{{ activeItem.description }}</span></v-list-item>
+                                <v-list-item><span class="headline">Date: {{activeItem.date}}</span></v-list-item>
+                                <v-list-item><span class="headline">{{activeItem.fromNow}}</span></v-list-item>
+                            </v-list>
+                        </v-card-title>
                     </v-card>
                 </v-dialog>
 
@@ -129,9 +145,9 @@
         </template>
 
         <template v-slot:item.product="{ item }">
-            {{productName(item.product_id)}}
+            {{item.product_id}}
+<!--            {{productName(item.product_id)}}-->
         </template>
-
         <template v-slot:item.description="{ item }">
             <v-btn
                 class="mr-2"
@@ -165,7 +181,7 @@
 
 <script>
 export default {
-    name: "Purchases",
+    name: "Sales",
     data: () => ({
         select:null,
         items:[],
@@ -178,6 +194,7 @@ export default {
         headers: [
             { text: 'Product', value: 'product' },
             { text: 'Price', value: 'price' },
+            { text: 'Sold At', value: 'sold_at',  },
             { text: 'Quantity', value: 'quantity' },
             { text: 'Description', value: 'description' },
             { text: 'Actions', value: 'actions', sortable: false },
@@ -186,11 +203,13 @@ export default {
         editedIndex: -1,
         editedItem: {
             price: 0,
+            sold_at: 0,
             quantity: 0,
             product_id: 0,
         },
         defaultItem: {
             price: 0,
+            sold_at: 0,
             quantity: 0,
             product_id: 0,
         },
@@ -223,15 +242,16 @@ export default {
             this.showingDescription = true;
         },
         productName:function (id){
-            return this.$store.getters.getProductById(id).name;
+            return this.$store.getters.getProductById(id);
+            // return this.$store.getters.getProductById(id).name;
         },
         initialize(){
-            // this.$store.dispatch('loadPurchases');
+            this.$store.dispatch('loadSales');
         },
         /*editItem (item) {
 
             // console.log(item)
-            this.editedIndex = this.purchases.indexOf(item)
+            this.editedIndex = this.sales.indexOf(item)
             // this.select = item.product_id
             // console.log(item,"edit")
             //
@@ -245,9 +265,9 @@ export default {
         },*/
 
         deleteItem (item) {
-            // const index = this.purchases.indexOf(item)
+            // const index = this.sales.indexOf(item)
 
-            confirm('Are you sure you want to delete this item?') && this.$store.dispatch('deletePurchase',item)
+            confirm('Are you sure you want to delete this item?') && this.$store.dispatch('deleteSale',item)
         },
 
         close () {
@@ -261,20 +281,20 @@ export default {
         save () {
 
             if (this.editedIndex > -1) {
-                this.$store.dispatch('updatePurchase',this.editedItem);
-                // Object.assign(this.purchases[this.editedIndex], this.editedItem)
+                this.$store.dispatch('updateSale',this.editedItem);
+                // Object.assign(this.sales[this.editedIndex], this.editedItem)
             } else {
-                this.$store.dispatch('createPurchase',this.editedItem)
+                this.$store.dispatch('createSale',this.editedItem)
             }
             this.close()
         },
     },
     computed:{
-        purchases(){
-            return this.$store.state.purchases;
+        sales(){
+            return this.$store.state.sales;
         },
         formTitle () {
-            return this.editedIndex === -1 ? 'Record Purchase' : 'Edit Purchases'
+            return this.editedIndex === -1 ? 'Record Sale' : 'Edit Sales'
         },
         products(){
             return this.$store.state.products;

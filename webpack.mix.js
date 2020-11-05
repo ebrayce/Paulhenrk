@@ -18,5 +18,5 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.browserSync('http://localhost:670');
+mix.browserSync('http://localhost:8000');
 mix.disableNotifications();
