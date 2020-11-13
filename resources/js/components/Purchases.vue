@@ -18,6 +18,7 @@
                 ></v-divider>
                 <v-spacer></v-spacer>
                 <v-dialog
+                    persistent
                     v-model="dialog"
                     max-width="500px"
                 >
@@ -39,48 +40,55 @@
 
                         <v-card-text>
                             <v-container>
-                                <v-row>
+                                <v-form ref="form" v-model="validForm">
+                                    <v-row>
 
-                                    <v-col
-                                        cols="12"
-                                        sm="12"
-                                        md="12"
-                                    >
-                                        <v-autocomplete
-                                            v-model="select"
-                                            :items="products"
-                                            :item-value="this"
-                                            item-text="name"
-                                            dense
-                                            filled
-                                            label="Select Product"
-                                        ></v-autocomplete>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="6"
-                                    >
-                                        <v-text-field
-                                            type="number"
-                                            v-model.number="editedItem.price"
-                                            label="Price"
-                                        ></v-text-field>
-                                    </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="12"
+                                            md="12"
+                                        >
+                                            <v-autocomplete
+                                                :rules="[rules.required]"
+                                                v-model="editedItem.product_id"
+                                                :items="products"
+                                                item-value="id"
+                                                item-text="name"
+                                                dense
+                                                filled
+                                                label="Select Product"
+                                                @change="fillForm"
+                                            ></v-autocomplete>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="6"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.price]"
+                                                type="number"
+                                                v-model.number="editedItem.price"
+                                                label="Price"
+                                            ></v-text-field>
+                                        </v-col>
 
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="6"
-                                    >
-                                        <v-text-field
-                                            type="number"
-                                            v-model.number="editedItem.quantity"
-                                            label="Quantity"
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-input hidden v-model="editedItem.product_id"></v-input>
-                                </v-row>
+                                        <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="6"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.required,rules.quantity]"
+                                                type="number"
+                                                v-model.number="editedItem.quantity"
+                                                label="Quantity"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-input hidden v-model="editedItem.product_id"></v-input>
+                                    </v-row>
+                                </v-form>
+
                             </v-container>
                         </v-card-text>
 
@@ -167,11 +175,17 @@
 export default {
     name: "Purchases",
     data: () => ({
+        validForm:true,
         select:null,
         items:[],
         loading:false,
         activeItem:{
             description:""
+        },
+        rules:{
+            required: value => !!value || 'Required.',
+            price: value => value >= 1 || 'Invalid Price.',
+            quantity: value => value >= 1 || 'Invalid Quantity',
         },
         dialog: false,
         showingDescription:false,
@@ -228,7 +242,7 @@ export default {
         initialize(){
             // this.$store.dispatch('loadPurchases');
         },
-        /*editItem (item) {
+        editItem (item) {
 
             // console.log(item)
             this.editedIndex = this.purchases.indexOf(item)
@@ -242,11 +256,9 @@ export default {
             this.select = item;
 
             this.dialog = true
-        },*/
+        },
 
         deleteItem (item) {
-            // const index = this.purchases.indexOf(item)
-
             confirm('Are you sure you want to delete this item?') && this.$store.dispatch('deletePurchase',item)
         },
 
@@ -256,18 +268,34 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
             })
+            this.$refs.form.reset();
+            this.$refs.form.resetValidation();
         },
 
         save () {
 
-            if (this.editedIndex > -1) {
-                this.$store.dispatch('updatePurchase',this.editedItem);
-                // Object.assign(this.purchases[this.editedIndex], this.editedItem)
-            } else {
-                this.$store.dispatch('createPurchase',this.editedItem)
+            this.$refs.form.validate();
+            if (this.validForm){
+                if (this.editedIndex > -1) {
+                    this.$store.dispatch('updatePurchase',this.editedItem);
+                    // Object.assign(this.purchases[this.editedIndex], this.editedItem)
+                } else {
+                    this.$store.dispatch('createPurchase',this.editedItem)
+                }
+                this.close()
             }
-            this.close()
+
         },
+        fillForm(val){
+            if (this.editedIndex === -1){
+                let product = this.products.find(prod=>{
+                    return prod.id === val;
+                })
+                this.editedItem.price = product.price;
+                this.editedItem.sold_at = product.price;
+
+            }
+        }
     },
     computed:{
         purchases(){

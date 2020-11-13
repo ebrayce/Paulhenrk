@@ -82,8 +82,12 @@
                 class="text-center"
                 cols="12"
             >
-                {{ new Date().getFullYear() }} — <strong class="text--black"><a href="https://www.facebook.com/brayce.ernest/" class="darken-4">Powered By
-                Ernest Brayce</a></strong>
+                {{ new Date().getFullYear() }} —
+<!--                <strong class="text&#45;&#45;black">-->
+<!--                    <a href="https://www.facebook.com/brayce.ernest/" class="darken-4">Powered By-->
+<!--                Ernest Brayce</a>-->
+<!--                </strong>-->
+                <strong>Powered by Richman</strong>
             </v-col>
         </v-footer>
     </v-app>

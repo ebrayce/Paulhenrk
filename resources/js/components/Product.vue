@@ -18,6 +18,7 @@
                 ></v-divider>
                 <v-spacer></v-spacer>
                 <v-dialog
+                    persistent
                     v-model="dialog"
                     max-width="500px"
                 >
@@ -39,62 +40,69 @@
 
                         <v-card-text>
                             <v-container>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                        sm="12"
-                                        md="12"
-                                    >
-                                        <v-text-field
-                                            v-model="editedItem.name"
-                                            label="Product name"
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                    >
-                                        <v-text-field
-                                            type="number"
-                                            v-model="editedItem.price"
-                                            label="Price"
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                    >
-                                        <v-text-field
-                                            type="number"
-                                            v-model.number="editedItem.in_stock"
-                                            label="In Stock"
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                    >
-                                        <v-text-field
-                                            type="number"
-                                            v-model.number="editedItem.min_stock"
-                                            label="Minimum Stock"
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        sm="12"
-                                        md="12"
-                                    >
-                                        <v-textarea
-                                            v-model="editedItem.description"
-                                            label="Description"
-                                        ></v-textarea>
-                                    </v-col>
+                                <v-form ref="form" v-model="validForm">
+                                    <v-row>
+                                        <v-col
+                                            cols="12"
+                                            sm="12"
+                                            md="12"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.required]"
+                                                v-model="editedItem.name"
+                                                label="Product name"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.price]"
+                                                type="number"
+                                                v-model="editedItem.price"
+                                                label="Price"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.inStock]"
+                                                type="number"
+                                                v-model.number="editedItem.in_stock"
+                                                label="In Stock f"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                        >
+                                            <v-text-field
+                                                :rules="[rules.minStock]"
+                                                type="number"
+                                                v-model.number="editedItem.min_stock"
+                                                label="Minimum Stock"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            sm="12"
+                                            md="12"
+                                        >
+                                            <v-textarea
+                                                v-model="editedItem.description"
+                                                label="Description"
+                                            ></v-textarea>
+                                        </v-col>
 
-                                </v-row>
+                                    </v-row>
+                                </v-form>
+
                             </v-container>
                         </v-card-text>
 
@@ -206,8 +214,18 @@
 export default {
     name: "Product",
     data: () => ({
+        validForm:true,
+
         activeItem:{
             description:""
+        },
+        rules:{
+            required: value => !!value || 'Required.',
+            price: value => value > 0 || 'Invalid Price.',
+            quantity: value => value >= 1 || 'Invalid Quantity',
+            minStock: value => value >= 0 || 'Invalid Min Stock',
+            inStock: value => value >= 0 || 'Invalid In Stock',
+
         },
         dialog: false,
         showingDescription:false,
@@ -286,17 +304,22 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
             })
+            this.$refs.form.reset();
+            this.$refs.form.resetValidation();
         },
 
         save () {
-
-            if (this.editedIndex > -1) {
-                this.$store.dispatch('updateProduct',this.editedItem);
-                // Object.assign(this.products[this.editedIndex], this.editedItem)
-            } else {
-                this.$store.dispatch('createProduct',this.editedItem)
+            this.$refs.form.validate();
+            if (this.validForm){
+                if (this.editedIndex > -1) {
+                    this.$store.dispatch('updateProduct',this.editedItem);
+                    // Object.assign(this.products[this.editedIndex], this.editedItem)
+                } else {
+                    this.$store.dispatch('createProduct',this.editedItem)
+                }
+                this.close()
             }
-            this.close()
+
         },
     },
     computed:{

@@ -321,7 +321,7 @@ const store = new Vuex.Store({
                 url: "/sale",
                 mode: "update-sale",
                 id: sale.id,
-                price: sale.name,
+                price: sale.price,
                 sold_at: sale.sold_at,
                 quantity: sale.quantity,
                 product_id: sale.product_id,
