@@ -60,6 +60,10 @@ namespace App\Models{
  * @property int $product_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $original
+ * @property-read mixed $square
+ * @property-read mixed $thumbnail
+ * @property-read mixed $web
  * @property-read \App\Models\Product $product
  * @method static \Illuminate\Database\Eloquent\Builder|ProductImage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductImage newQuery()
