@@ -156,6 +156,29 @@ const store = new Vuex.Store({
             })
         },
 
+        uploadProductImages(context, payload)
+        {
+            let info = {}
+            info.url = "";
+            info.mode = "upload-image";
+
+
+
+            let form = new FormData();
+            payload.images.forEach(file=>{
+                form.append('files[]', file)
+            })
+
+            form.append('product_id', payload.productId)
+            form.append('mode', 'upload-image')
+
+            axios.post('/data', form).then(res => {
+                console.log(res)
+            });
+
+            // context.dispatch('loadPost', )
+        },
+
         pageExpired(context){
             context.commit('updateIsAuth',false)
         },
